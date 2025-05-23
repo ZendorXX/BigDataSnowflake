@@ -1,4 +1,3 @@
--- DDL: Создание временной таблицы
 CREATE TABLE mock_data (
     id INT,
     customer_first_name VARCHAR,
@@ -51,3 +50,24 @@ CREATE TABLE mock_data (
     supplier_city VARCHAR,
     supplier_country VARCHAR
 );
+
+COPY mock_data
+FROM '/mock_data/MOCK_DATA.csv' WITH CSV HEADER;
+COPY mock_data
+FROM '/mock_data/MOCK_DATA (1).csv' WITH CSV HEADER;
+COPY mock_data
+FROM '/mock_data/MOCK_DATA (2).csv' WITH CSV HEADER;
+COPY mock_data
+FROM '/mock_data/MOCK_DATA (3).csv' WITH CSV HEADER;
+COPY mock_data
+FROM '/mock_data/MOCK_DATA (4).csv' WITH CSV HEADER;
+COPY mock_data
+FROM '/mock_data/MOCK_DATA (5).csv' WITH CSV HEADER;
+COPY mock_data
+FROM '/mock_data/MOCK_DATA (6).csv' WITH CSV HEADER;
+COPY mock_data
+FROM '/mock_data/MOCK_DATA (7).csv' WITH CSV HEADER;
+COPY mock_data
+FROM '/mock_data/MOCK_DATA (8).csv' WITH CSV HEADER;
+COPY mock_data
+FROM '/mock_data/MOCK_DATA (9).csv' WITH CSV HEADER;

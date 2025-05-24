@@ -104,7 +104,7 @@ JOIN dim_city ct ON md.store_city = ct.city_name;
 
 INSERT INTO dim_product (
     product_name_id, category_id, price, quantity, weight, color_id, size_id, brand_id, material_id,
-    description, rating, reviews, release_date, expiry_date
+    description, rating, reviews, release_date, expiry_date, supplier_id
 )
 SELECT DISTINCT
     dpn.product_name_id,
@@ -120,17 +120,19 @@ SELECT DISTINCT
     product_rating,
     product_reviews,
     product_release_date,
-    product_expiry_date
+    product_expiry_date,
+    ppp.supplier_id
 FROM public.mock_data m
 JOIN dim_product_name dpn ON dpn.product_name = m.product_name
 JOIN dim_product_category dpc ON dpc.category_name = m.product_category
 JOIN dim_brand db ON db.brand_name = m.product_brand
 JOIN dim_material dm ON dm.material_name = m.product_material
 JOIN dim_color dc ON dc.color_name = m.product_color
-JOIN dim_size ds ON ds.size_name = m.product_size;
+JOIN dim_size ds ON ds.size_name = m.product_size
+JOIN dim_supplier  AS ppp ON m.supplier_email = ppp.email;
 
 INSERT INTO fact_sales (
-    sale_date, sale_quantity, sale_total_price, customer_id, seller_id, supplier_id, store_id, product_id
+    sale_date, sale_quantity, sale_total_price, customer_id, seller_id, store_id, product_id
 )
 select
     m.sale_date,
@@ -138,13 +140,11 @@ select
     m.sale_total_price,
     c.customer_id,
     s.seller_id,
-    ppp.supplier_id,
     st.store_id,
     pr.product_id
 FROM public.mock_data AS m
 JOIN dim_customer  AS c  ON m.customer_email = c.email
 JOIN dim_seller    AS s  ON m.seller_email   = s.email
-JOIN dim_supplier  AS ppp ON m.supplier_email = ppp.email
 JOIN dim_store     AS st ON m.store_name = st.name and m.store_location = st.location and m.store_phone = st.phone
 JOIN dim_product_name dpn ON dpn.product_name = m.product_name
 JOIN dim_product pr ON pr.product_name_id = dpn.product_name_id AND pr.price = m.product_price AND pr.quantity = m.product_quantity AND pr.weight = m.product_weight; 

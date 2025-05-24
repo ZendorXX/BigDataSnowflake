@@ -118,7 +118,8 @@ CREATE TABLE dim_product (
     rating             NUMERIC(3,2),
     reviews            INT,
     release_date       DATE,
-    expiry_date        DATE
+    expiry_date        DATE,
+    supplier_id        INT REFERENCES dim_supplier(supplier_id)
 );
 
 CREATE TABLE fact_sales (
@@ -126,7 +127,6 @@ CREATE TABLE fact_sales (
     sale_date          DATE,
     customer_id        INT REFERENCES dim_customer(customer_id),
     seller_id          INT REFERENCES dim_seller(seller_id),
-    supplier_id        INT REFERENCES dim_supplier(supplier_id),
     store_id           INT REFERENCES dim_store(store_id),
     product_id         INT REFERENCES dim_product(product_id),
     sale_quantity      INT,
